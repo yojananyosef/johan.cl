@@ -4,6 +4,11 @@
   // Fecha acotada al workerd empaquetado por wrangler (evita ERR_RUNTIME_FAILURE)
   "compatibility_date": "2026-04-15",
   "compatibility_flags": ["nodejs_compat"],
+  // Custom domains: la zona johan.cl debe estar en esta cuenta de Cloudflare
+  "routes": [
+    { "pattern": "johan.cl", "custom_domain": true },
+    { "pattern": "www.johan.cl", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./dist/client",
     "binding": "ASSETS"
