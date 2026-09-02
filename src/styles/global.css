@@ -1,0 +1,359 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ------------------------------------------------------------------ */
+/* Fuentes vendidas (SIL OFL) — también consumidas por Satori en build */
+/* ------------------------------------------------------------------ */
+@font-face {
+	font-family: "Cormorant Garamond";
+	src: url("../assets/fonts/cormorant-garamond-500.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Cormorant Garamond";
+	src: url("../assets/fonts/cormorant-garamond-600.ttf") format("truetype");
+	font-weight: 600;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Inter";
+	src: url("../assets/fonts/inter-400.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Inter";
+	src: url("../assets/fonts/inter-500.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "Inter";
+	src: url("../assets/fonts/inter-700.ttf") format("truetype");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "JetBrains Mono";
+	src: url("../assets/fonts/jetbrains-mono-400.ttf") format("truetype");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tokens de marca (ref: design system editorial crema, primario fern) */
+/* ------------------------------------------------------------------ */
+:root {
+	--canvas: #faf9f5;
+	--surface-soft: #f5f0e8;
+	--surface-card: #efe9de;
+	--surface-strong: #e8e0d2;
+	--hairline: #e6dfd8;
+	--hairline-soft: #ebe6df;
+
+	--ink: #141413;
+	--body-strong: #252523;
+	--body: #3d3d3a;
+	--muted: #6c6a64;
+	--muted-soft: #8e8b82;
+
+	--primary: #4f7d5c;
+	--primary-active: #3f6449;
+	--primary-text: #446e52;
+	--primary-disabled: #e6dfd8;
+	--on-primary: #ffffff;
+
+	--on-dark: #faf9f5;
+	--on-dark-soft: #a09d96;
+
+	--accent-teal: #5db8a6;
+	--accent-amber: #e8a55a;
+
+	--success: #5db872;
+	--warning: #d4a017;
+	--error: #c64545;
+}
+
+[data-theme="dark"] {
+	--canvas: #181715;
+	--surface-soft: #1f1e1b;
+	--surface-card: #252320;
+	--surface-strong: #2e2b27;
+	--hairline: #3a3733;
+	--hairline-soft: #2c2a26;
+
+	--ink: #faf9f5;
+	--body-strong: #efece5;
+	--body: #d8d5cd;
+	--muted: #a09d96;
+	--muted-soft: #7d7a72;
+
+	--primary-text: #79a88a;
+	--primary-disabled: #3a3733;
+}
+
+/* ------------------------------------------------------------------ */
+/* Exposición de tokens como utilidades Tailwind                      */
+/* ------------------------------------------------------------------ */
+@theme inline {
+	--font-display: "Cormorant Garamond", Garamond, "Times New Roman", serif;
+	--font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+	--color-canvas: var(--canvas);
+	--color-surface-soft: var(--surface-soft);
+	--color-surface-card: var(--surface-card);
+	--color-surface-strong: var(--surface-strong);
+	--color-hairline: var(--hairline);
+	--color-hairline-soft: var(--hairline-soft);
+
+	--color-ink: var(--ink);
+	--color-body-strong: var(--body-strong);
+	--color-body: var(--body);
+	--color-muted: var(--muted);
+	--color-muted-soft: var(--muted-soft);
+
+	--color-primary: var(--primary);
+	--color-primary-active: var(--primary-active);
+	--color-primary-text: var(--primary-text);
+	--color-primary-disabled: var(--primary-disabled);
+	--color-on-primary: var(--on-primary);
+
+	--color-on-dark: var(--on-dark);
+	--color-on-dark-soft: var(--on-dark-soft);
+
+	--color-surface-dark: #181715;
+	--color-surface-dark-elevated: #252320;
+	--color-surface-dark-soft: #1f1e1b;
+
+	--color-accent-teal: var(--accent-teal);
+	--color-accent-amber: var(--accent-amber);
+	--color-success: var(--success);
+	--color-warning: var(--warning);
+	--color-error: var(--error);
+
+	--radius-md: 8px;
+	--radius-lg: 12px;
+	--radius-xl: 16px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                */
+/* ------------------------------------------------------------------ */
+@layer base {
+	html {
+		scroll-behavior: smooth;
+	}
+	body {
+		background: var(--canvas);
+		color: var(--body);
+		font-family: var(--font-sans);
+		font-size: 1rem;
+		line-height: 1.55;
+		-webkit-font-smoothing: antialiased;
+	}
+	h1,
+	h2,
+	h3,
+	h4 {
+		color: var(--ink);
+		font-family: var(--font-display);
+		font-weight: 500;
+	}
+	::selection {
+		background: color-mix(in srgb, var(--primary) 25%, transparent);
+	}
+	:focus-visible {
+		outline: 2px solid var(--primary);
+		outline-offset: 2px;
+	}
+}
+
+/* ------------------------------------------------------------------ */
+/* Componentes compartidos                                             */
+/* ------------------------------------------------------------------ */
+@layer components {
+	/* Escala display — serif 400–500, tracking negativo obligatorio */
+	.display-xl {
+		font-family: var(--font-display);
+		font-weight: 500;
+		font-size: clamp(2.5rem, 5.2vw, 4rem); /* 40 → 64px */
+		line-height: 1.05;
+		letter-spacing: -0.025em;
+	}
+	.display-lg {
+		font-family: var(--font-display);
+		font-weight: 500;
+		font-size: clamp(2rem, 3.6vw, 3rem); /* 32 → 48px */
+		line-height: 1.1;
+		letter-spacing: -0.02em;
+	}
+	.display-md {
+		font-family: var(--font-display);
+		font-weight: 500;
+		font-size: clamp(1.625rem, 2.6vw, 2.25rem); /* 26 → 36px */
+		line-height: 1.15;
+		letter-spacing: -0.015em;
+	}
+	.display-sm {
+		font-family: var(--font-display);
+		font-weight: 500;
+		font-size: clamp(1.375rem, 2vw, 1.75rem); /* 22 → 28px */
+		line-height: 1.2;
+		letter-spacing: -0.01em;
+	}
+
+	/* Botones */
+	.btn-primary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: 2.5rem;
+		padding: 0 1.25rem;
+		border-radius: var(--radius-md);
+		background: var(--primary);
+		color: var(--on-primary);
+		font-size: 0.875rem;
+		font-weight: 500;
+		line-height: 1;
+		transition: background-color 120ms ease;
+	}
+	.btn-primary:hover {
+		background: var(--primary-active);
+	}
+	.btn-primary:disabled {
+		background: var(--primary-disabled);
+		color: var(--muted);
+	}
+	.btn-secondary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: 2.5rem;
+		padding: 0 1.25rem;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--hairline);
+		background: var(--canvas);
+		color: var(--ink);
+		font-size: 0.875rem;
+		font-weight: 500;
+		line-height: 1;
+		transition: border-color 120ms ease;
+	}
+	.btn-secondary:hover {
+		border-color: var(--muted-soft);
+	}
+
+	/* Texto de enlace en color primario (escaso, según el sistema) */
+	.text-link {
+		color: var(--primary-text);
+		font-weight: 500;
+	}
+	.text-link:hover {
+		text-decoration: underline;
+	}
+
+	/* Wireframe/skeleton para la landing en construcción */
+	.wire-box {
+		border: 1px dashed var(--hairline);
+		border-radius: var(--radius-lg);
+		background: var(--surface-soft);
+	}
+	.wire-line {
+		height: 0.75rem;
+		border-radius: 9999px;
+		background: var(--surface-strong);
+	}
+	.wire-chip {
+		display: inline-flex;
+		align-items: center;
+		height: 1.5rem;
+		padding: 0 0.75rem;
+		border-radius: 9999px;
+		border: 1px dashed var(--hairline);
+		background: transparent;
+	}
+
+	/* Badge píldora */
+	.badge-pill {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.25rem 0.75rem;
+		border-radius: 9999px;
+		background: var(--surface-card);
+		color: var(--ink);
+		font-size: 0.8125rem;
+		font-weight: 500;
+		line-height: 1.4;
+	}
+	.badge-primary {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.25rem 0.75rem;
+		border-radius: 9999px;
+		background: var(--primary);
+		color: var(--on-primary);
+		font-size: 0.75rem;
+		font-weight: 500;
+		line-height: 1.4;
+		letter-spacing: 0.075em;
+		text-transform: uppercase;
+	}
+
+	/* Glifo de marca: monograma J + cruz */
+	.brand-mark {
+		color: var(--ink);
+	}
+	[data-theme="dark"] .brand-mark {
+		color: var(--on-dark);
+	}
+}
+
+/* ------------------------------------------------------------------ */
+/* Prosa del blog — tipografía editorial                               */
+/* ------------------------------------------------------------------ */
+.prose-post {
+	--tw-prose-body: var(--body);
+	--tw-prose-headings: var(--ink);
+	--tw-prose-lead: var(--body-strong);
+	--tw-prose-links: var(--primary-text);
+	--tw-prose-bold: var(--body-strong);
+	--tw-prose-counters: var(--muted);
+	--tw-prose-bullets: var(--muted-soft);
+	--tw-prose-hr: var(--hairline);
+	--tw-prose-quotes: var(--body-strong);
+	--tw-prose-quote-borders: var(--primary);
+	--tw-prose-captions: var(--muted);
+	--tw-prose-code: var(--body-strong);
+	--tw-prose-pre-code: var(--on-dark);
+	--tw-prose-pre-bg: #1f1e1b;
+	--tw-prose-th-borders: var(--hairline);
+	--tw-prose-td-borders: var(--hairline-soft);
+
+	font-family: var(--font-sans);
+}
+.prose-post :where(h1, h2, h3, h4) {
+	font-family: var(--font-display);
+	font-weight: 500;
+	letter-spacing: -0.01em;
+}
+.prose-post :where(code):not(:where(pre code)) {
+	font-family: var(--font-mono);
+	font-weight: 400;
+	background: var(--surface-card);
+	padding: 0.15em 0.4em;
+	border-radius: 6px;
+}
+.prose-post :where(pre) {
+	font-family: var(--font-mono);
+	border-radius: var(--radius-lg);
+}

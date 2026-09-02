@@ -1,0 +1,50 @@
+---
+// FILTRO POR TAGS: prerender de una página por cada tag usada.
+export const prerender = true
+
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../components/BaseLayout.astro'
+import PostCard from '../../components/PostCard.astro'
+import { collectTags } from '../../utils/tags'
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog', ({ data }) => !data.draft)
+	return collectTags(posts).map(({ slug, tag }) => ({
+		params: { tag: slug },
+		props: { tag, posts: posts.filter((p) => p.data.tags.includes(tag)) },
+	}))
+}
+
+interface Props {
+	tag: string
+	posts: Awaited<ReturnType<typeof getCollection<'blog'>>>
+}
+
+const { tag, posts } = Astro.props
+const sorted = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+---
+
+<BaseLayout title={`Etiqueta: ${tag}`} description={`Notas etiquetadas «${tag}».`}>
+	<section class="py-24">
+		<div class="mx-auto w-full max-w-[75rem] px-6 md:px-8">
+			<p class="text-sm text-muted">Etiqueta</p>
+			<h1 class="display-lg mt-2">{tag}</h1>
+			<p class="mt-3 text-body">
+				{sorted.length}
+				{sorted.length === 1 ? 'nota' : 'notas'}
+			</p>
+
+			<ul class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" role="list">
+				{sorted.map((post) => (
+					<li>
+						<PostCard post={post} />
+					</li>
+				))}
+			</ul>
+
+			<div class="mt-12">
+				<a href="/blog" class="text-link text-sm">← Todas las notas</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

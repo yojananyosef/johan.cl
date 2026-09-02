@@ -1,0 +1,40 @@
+---
+// Tarjeta de post reutilizada por el índice, la paginación y las tags.
+// Card entero clickeable (stretched link) y alto uniforme dentro del grid.
+import type { CollectionEntry } from 'astro:content'
+import { tagToSlug } from '../utils/tags'
+import FormattedDate from './FormattedDate.astro'
+
+interface Props {
+	post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+---
+
+<article
+	class="relative flex h-full flex-col rounded-lg border border-hairline bg-canvas p-8 transition-colors hover:border-muted-soft"
+>
+	<p class="text-sm text-muted">
+		<FormattedDate date={post.data.pubDate} />
+	</p>
+	<h3 class="display-sm mt-3">
+		<a href={`/blog/${post.id}`} class="after:absolute after:inset-0 after:rounded-lg after:content-['']">
+			{post.data.title}
+		</a>
+	</h3>
+	<p class="mt-3 text-body">{post.data.description}</p>
+	{
+		post.data.tags.length > 0 && (
+			<ul class="relative z-10 mt-auto flex flex-wrap gap-2 pt-5" role="list">
+				{post.data.tags.map((tag) => (
+					<li>
+						<a href={`/tags/${tagToSlug(tag)}`} class="badge-pill transition-colors hover:bg-surface-strong">
+							{tag}
+						</a>
+					</li>
+				))}
+			</ul>
+		)
+	}
+</article>

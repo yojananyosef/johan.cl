@@ -1,0 +1,22 @@
+---
+// Página 404 prerenderizada; el Worker la sirve para rutas desconocidas.
+export const prerender = true
+
+import BaseLayout from '../components/BaseLayout.astro'
+---
+
+<BaseLayout title="Página no encontrada" noindex>
+	<section class="py-24">
+		<div class="mx-auto w-full max-w-[43.75rem] px-6 text-center">
+			<p class="badge-pill mx-auto">Error 404</p>
+			<h1 class="display-lg mt-6">Esta página no existe</h1>
+			<p class="mt-4 text-body">
+				La dirección que pediste no está en el sitio. Puede que la nota se haya movido o nunca haya existido.
+			</p>
+			<div class="mt-10 flex flex-wrap justify-center gap-3">
+				<a href="/" class="btn-primary">Ir al inicio</a>
+				<a href="/blog" class="btn-secondary">Ver el blog</a>
+			</div>
+		</div>
+	</section>
+</BaseLayout>

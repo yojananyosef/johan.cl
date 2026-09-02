@@ -1,0 +1,25 @@
+---
+// Server Island: el contador se resuelve en el Worker (binding KV VIEWS)
+// y reemplaza al fallback esquelético tras el primer paint.
+//
+// La página que la incluye está prerenderizada: el módulo se carga también en
+// el prerender de Node, donde 'cloudflare:workers' no existe. Por eso el
+// binding se resuelve con import dinámico en runtime (workerd) y con
+// degradación controlada durante el build.
+interface Props {
+	slug: string
+}
+
+const { slug } = Astro.props
+
+let views = 0
+try {
+	const { env } = await import(/* @vite-ignore */ 'cloudflare:workers')
+	const raw = await env.VIEWS.get(`views:${slug}`)
+	views = Number.parseInt(raw ?? '0', 10) || 0
+} catch {
+	views = 0
+}
+---
+
+<span class="tabular-nums">{views.toLocaleString('es-CL')} lecturas</span>

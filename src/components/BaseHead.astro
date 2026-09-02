@@ -1,0 +1,57 @@
+---
+interface Props {
+	title: string
+	description: string
+	image?: string
+	type?: string
+	noindex?: boolean
+}
+
+const { title, description, image, type = 'website', noindex = false } = Astro.props
+
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname
+const ogImage = image ?? (Astro.site ? new URL('/og/johan.png', Astro.site).href : undefined)
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+<!-- Canonical -->
+<link rel="canonical" href={canonical} />
+
+<!-- Primary Meta -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+<meta name="author" content="Johan Gutierrez" />
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf9f5" />
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#181715" />
+
+<!-- Open Graph -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:site_name" content="johan.cl" />
+<meta property="og:locale" content="es_CL" />
+{ogImage && <meta property="og:image" content={ogImage} />}
+{ogImage && <meta property="og:image:width" content="1200" />}
+{ogImage && <meta property="og:image:height" content="630" />}
+
+<!-- Twitter -->
+<meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{ogImage && <meta name="twitter:image" content={ogImage} />}
+
+<!-- RSS -->
+<link
+	rel="alternate"
+	type="application/rss+xml"
+	title="johan.cl — RSS"
+	href={Astro.site ? new URL('/rss.xml', Astro.site).href : '/rss.xml'}
+/>

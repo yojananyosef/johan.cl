@@ -1,0 +1,22 @@
+---
+// LANDING PAGE PRINCIPAL — wireframe esquelético (solo el nombre).
+// Patrón del proyecto: TODA página estática declara prerender = true.
+export const prerender = true
+
+import CtaBand from '../components/landing/CtaBand.astro'
+import FeaturedProjects from '../components/landing/FeaturedProjects.astro'
+import FeaturesGrid from '../components/landing/FeaturesGrid.astro'
+import Hero from '../components/landing/Hero.astro'
+import LatestPosts from '../components/landing/LatestPosts.astro'
+import MetricsBand from '../components/landing/MetricsBand.astro'
+import LandingLayout from '../layouts/LandingLayout.astro'
+---
+
+<LandingLayout>
+	<Hero />
+	<FeaturesGrid />
+	<FeaturedProjects />
+	<LatestPosts />
+	<MetricsBand />
+	<CtaBand />
+</LandingLayout>

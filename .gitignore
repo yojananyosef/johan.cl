@@ -1,0 +1,18 @@
+# build
+dist/
+.astro/
+
+# deps
+node_modules/
+
+# wrangler
+.wrangler/
+worker-configuration.d.ts
+.dev.vars*
+
+# env / secrets
+.env
+.env.*
+
+# editor / os
+.DS_Store

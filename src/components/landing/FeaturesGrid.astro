@@ -1,0 +1,40 @@
+---
+// Grid 3-up de propuesta de valor. Sin datos: 3 tarjetas wireframe.
+import { site } from '../../data/site'
+
+const placeholders = [0, 1, 2]
+---
+
+<section class="bg-surface-soft py-24">
+	<div class="mx-auto w-full max-w-[75rem] px-6 md:px-8">
+		<h2 class="display-lg">
+			{
+				site.features.length > 0 ? (
+					'Lo que hago'
+				) : (
+					<span class="wire-line block w-64" style="height: 2rem;" aria-hidden="true" />
+				)
+			}
+		</h2>
+
+		<ul class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" role="list">
+			{
+				site.features.length > 0
+					? site.features.map((feature) => (
+							<li class="rounded-lg bg-surface-card p-8">
+								<h3 class="text-lg font-medium text-ink">{feature.title}</h3>
+								<p class="mt-3 text-body">{feature.description}</p>
+							</li>
+						))
+					: placeholders.map(() => (
+							<li class="rounded-lg bg-surface-card p-8" aria-hidden="true">
+								<span class="wire-box block size-10 rounded-md" />
+								<span class="wire-line mt-6 block w-1/2" />
+								<span class="wire-line mt-4 block w-full opacity-80" />
+								<span class="wire-line mt-2 block w-2/3 opacity-80" />
+							</li>
+						))
+			}
+		</ul>
+	</div>
+</section>

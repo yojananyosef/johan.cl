@@ -1,0 +1,122 @@
+---
+import { site } from '../data/site'
+// Navbar 64px sobre canvas: monograma + nombre, nav mínima, tema y búsqueda.
+// Sin frameworks: el toggle usa delegación de eventos (sobrevive <ClientRouter />).
+import Search from './search/Search.svelte'
+---
+
+<header class="sticky top-0 z-40 border-b border-hairline bg-canvas">
+	<div class="mx-auto flex h-16 w-full max-w-[75rem] items-center justify-between px-6 md:px-8">
+		<a href="/" class="flex items-center gap-2 text-ink" aria-label="Inicio">
+			<svg class="brand-mark size-5" viewBox="0 0 24 24" aria-hidden="true">
+					<g stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="square">
+						<path d="M12 3v13.2a3.6 3.6 0 0 1-7.2 0v-.7"></path>
+						<path d="M5.4 6.6h13.4"></path>
+					</g>
+				</svg>
+			<span class="font-display text-lg font-medium tracking-normal">{site.name}</span>
+		</a>
+
+		<nav aria-label="Principal">
+			<ul class="flex items-center gap-1 text-sm font-medium">
+				<li>
+					<a
+						href="/"
+						class="rounded-md px-3 py-2 transition-colors hover:bg-surface-card"
+						aria-current={Astro.url.pathname === '/' ? 'page' : undefined}
+					>
+						Inicio
+					</a>
+				</li>
+				<li>
+					<a
+						href="/blog"
+						class="rounded-md px-3 py-2 transition-colors hover:bg-surface-card"
+						aria-current={Astro.url.pathname.startsWith('/blog') ? 'page' : undefined}
+					>
+						Blog
+					</a>
+				</li>
+			</ul>
+		</nav>
+
+		<div class="flex items-center gap-2">
+			<button
+				type="button"
+				class="flex h-9 items-center gap-2 rounded-md border border-hairline px-3 text-sm text-muted transition-colors hover:border-muted-soft hover:text-ink"
+				data-search-open
+				aria-label="Buscar (Ctrl+K)"
+			>
+				<svg class="size-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+					<circle cx="11" cy="11" r="7"></circle>
+					<path d="m20 20-3.5-3.5"></path>
+				</svg>
+				<span class="hidden text-xs sm:inline" aria-hidden="true">⌘K</span>
+			</button>
+
+			<button
+				type="button"
+				class="flex size-9 items-center justify-center rounded-full border border-hairline text-ink transition-colors hover:border-muted-soft"
+				data-theme-toggle
+				aria-label="Cambiar tema"
+			>
+				<!-- sol (visible en claro) -->
+				<svg
+					class="theme-icon-light size-4"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					aria-hidden="true"
+				>
+					<circle cx="12" cy="12" r="4"></circle>
+					<path
+						d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"
+					></path>
+				</svg>
+				<!-- luna (visible en oscuro) -->
+				<svg
+					class="theme-icon-dark size-4"
+					viewBox="0 0 24 24"
+					fill="none"
+					stroke="currentColor"
+					stroke-width="2"
+					aria-hidden="true"
+				>
+					<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<!-- Isla de búsqueda: único JS de framework del shell (client:idle) -->
+	<Search client:idle />
+
+	<style>
+		.theme-icon-dark {
+			display: none;
+		}
+		[data-theme='dark'] .theme-icon-light {
+			display: none;
+		}
+		[data-theme='dark'] .theme-icon-dark {
+			display: block;
+		}
+	</style>
+
+	<script is:inline>
+		// Delegación global: el listener vive en document y sobrevive al swap de <ClientRouter />.
+		document.addEventListener('click', (event) => {
+			const target = event.target instanceof Element ? event.target.closest('[data-theme-toggle]') : null;
+			if (!target) return;
+			const root = document.documentElement;
+			const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+			root.dataset.theme = next;
+			try {
+				localStorage.setItem('theme', next);
+			} catch {
+				/* almacenamiento no disponible */
+			}
+		});
+	</script>
+</header>

@@ -1,0 +1,45 @@
+---
+import '../styles/global.css'
+import { ClientRouter } from 'astro:transitions'
+import { site } from '../data/site'
+import BaseHead from './BaseHead.astro'
+import Footer from './Footer.astro'
+import Header from './Header.astro'
+
+interface Props {
+	title?: string
+	description?: string
+	image?: string
+	type?: string
+	noindex?: boolean
+}
+
+const { title, description = site.description, image, type, noindex } = Astro.props
+const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.domain}`
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={pageTitle} description={description} image={image} type={type} noindex={noindex} />
+		<script is:inline>
+			// Anti-FOUC: resuelve el tema antes del primer paint.
+			(() => {
+				const resolve = () =>
+					localStorage.getItem('theme') ??
+					(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+				document.documentElement.dataset.theme = resolve();
+				document.addEventListener('astro:after-swap', () => {
+					document.documentElement.dataset.theme = resolve();
+				});
+			})();
+		</script>
+	</head>
+	<body class="flex min-h-dvh flex-col bg-canvas text-body">
+		<Header />
+		<main class="flex-1">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>

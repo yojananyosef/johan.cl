@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <!-- Monograma: J + cruz asimiladas (palo de la J = eje de la cruz, barra = tramo superior) -->
+  <g stroke="#141413" stroke-width="2.4" fill="none" stroke-linecap="square">
+    <path d="M12 3v13.2a3.6 3.6 0 0 1-7.2 0v-.7"/>
+    <path d="M5.4 6.6h13.4"/>
+  </g>
+</svg>

@@ -1,0 +1,57 @@
+---
+// LECTURA DE ARTÍCULO: prerender estático + Server Island de vistas + JSON-LD.
+export const prerender = true
+
+import { getCollection, render } from 'astro:content'
+import BaseLayout from '../../components/BaseLayout.astro'
+import { site } from '../../data/site'
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro'
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog', ({ data }) => !data.draft)
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post },
+	}))
+}
+
+const { post } = Astro.props
+const { Content } = await render(post)
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : Astro.url.pathname
+const ogImage = Astro.site ? new URL(`/og/${post.id}.png`, Astro.site).href : undefined
+
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BlogPosting',
+	headline: post.data.title,
+	description: post.data.description,
+	datePublished: post.data.pubDate.toISOString(),
+	dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
+	author: { '@type': 'Person', name: site.name, url: Astro.site?.href },
+	mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+	image: ogImage,
+	inLanguage: 'es-CL',
+	keywords: post.data.tags.join(', '),
+}
+---
+
+<BaseLayout title={post.data.title} description={post.data.description} image={ogImage} type="article">
+	<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+	<BlogPostLayout post={post}>
+		<Content />
+	</BlogPostLayout>
+
+	<script is:inline define:vars={{ slug: post.id }}>
+		// Incrementa la vista una sola vez por sesión y artículo (guard sessionStorage).
+		(() => {
+			try {
+				const key = `viewed:${slug}`;
+				if (sessionStorage.getItem(key)) return;
+				sessionStorage.setItem(key, '1');
+				fetch(`/api/views/${slug}`, { method: 'POST', keepalive: true }).catch(() => {});
+			} catch {
+				/* sessionStorage no disponible */
+			}
+		})();
+	</script>
+</BaseLayout>

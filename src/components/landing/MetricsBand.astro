@@ -1,0 +1,32 @@
+---
+// Fila de métricas. Sin datos: 4 bloques wireframe.
+import { site } from '../../data/site'
+
+const placeholders = [0, 1, 2, 3]
+---
+
+<section class="py-24">
+	<div class="mx-auto w-full max-w-[75rem] px-6 md:px-8">
+		{
+			site.metrics.length > 0 ? (
+				<dl class="grid grid-cols-2 gap-8 text-center sm:grid-cols-4">
+					{site.metrics.map((metric) => (
+						<div>
+							<dt class="order-2 mt-2 text-sm text-muted">{metric.label}</dt>
+							<dd class="display-md order-1 text-primary-text">{metric.value}</dd>
+						</div>
+					))}
+				</dl>
+			) : (
+				<div class="grid grid-cols-2 gap-8 sm:grid-cols-4" aria-hidden="true">
+					{placeholders.map(() => (
+						<div class="flex flex-col items-center gap-3">
+							<span class="wire-line w-16" style="height: 1.75rem;" />
+							<span class="wire-line w-20 opacity-60" style="height: 0.6rem;" />
+						</div>
+					))}
+				</div>
+			)
+		}
+	</div>
+</section>

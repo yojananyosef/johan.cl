@@ -1,0 +1,76 @@
+---
+// PAGINACIÓN ESTÁTICA: /blog/page/2, /blog/page/3… (la página 1 es /blog,
+// redirigida en astro.config con `redirects`).
+export const prerender = true
+
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../../components/BaseLayout.astro'
+import PostCard from '../../../components/PostCard.astro'
+
+export async function getStaticPaths() {
+	const PAGE_SIZE = 6
+	const allPosts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+		(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+	)
+	const totalPages = Math.ceil(allPosts.length / PAGE_SIZE)
+	// Solo genera páginas 2..N; la página 1 vive en /blog
+	return Array.from({ length: Math.max(0, totalPages - 1) }, (_, i) => ({
+		params: { page: String(i + 2) },
+		props: { pageIndex: i + 1, posts: allPosts, totalPages },
+	}))
+}
+
+interface Props {
+	pageIndex: number
+	posts: Awaited<ReturnType<typeof getCollection<'blog'>>>
+	totalPages: number
+}
+
+const PAGE_SIZE = 6
+
+const { pageIndex, posts: allPosts, totalPages } = Astro.props
+const posts = allPosts.slice(pageIndex * PAGE_SIZE, pageIndex * PAGE_SIZE + PAGE_SIZE)
+const prevPage = pageIndex // pageIndex es 1-based → prev = /blog/page/N o /blog
+const nextPage = pageIndex + 2
+const hasNext = pageIndex + 1 < totalPages
+---
+
+<BaseLayout title={`Blog — página ${pageIndex + 1}`} description="Notas de tecnología y teología.">
+	<section class="py-24">
+		<div class="mx-auto w-full max-w-[75rem] px-6 md:px-8">
+			<div class="flex flex-wrap items-end justify-between gap-6">
+				<h1 class="display-lg">Blog</h1>
+				<p class="text-sm text-muted">Página {pageIndex + 1} de {totalPages}</p>
+			</div>
+
+			<ul class="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" role="list">
+				{posts.map((post) => (
+					<li>
+						<PostCard post={post} />
+					</li>
+				))}
+			</ul>
+
+			<nav class="mt-12 flex items-center justify-between" aria-label="Paginación">
+				{
+					prevPage === 1 ? (
+						<a href="/blog" class="btn-secondary">
+							← Anterior
+						</a>
+					) : (
+						<a href={`/blog/page/${prevPage}`} class="btn-secondary">
+							← Anterior
+						</a>
+					)
+				}
+				{
+					hasNext && (
+						<a href={`/blog/page/${nextPage}`} class="btn-secondary">
+							Siguiente →
+						</a>
+					)
+				}
+			</nav>
+		</div>
+	</section>
+</BaseLayout>

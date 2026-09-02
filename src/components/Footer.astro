@@ -1,0 +1,73 @@
+---
+// Footer oscuro que cierra cada página: wordmark + columnas de enlaces.
+// Los enlaces provienen de site.links; si están vacíos, muestra placeholders wireframe.
+import { site } from '../data/site'
+
+const year = new Date().getFullYear()
+---
+
+<footer class="mt-24 border-t border-hairline bg-surface-dark text-on-dark-soft">
+	<div class="mx-auto w-full max-w-[75rem] px-6 py-16 md:px-8">
+		<div class="flex items-center gap-2">
+			<svg class="size-5 text-on-dark" viewBox="0 0 24 24" aria-hidden="true">
+					<g stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="square">
+						<path d="M12 3v13.2a3.6 3.6 0 0 1-7.2 0v-.7"></path>
+						<path d="M5.4 6.6h13.4"></path>
+					</g>
+				</svg>
+			<span class="font-display text-lg font-medium text-on-dark">{site.name}</span>
+		</div>
+
+		<div class="mt-10 grid grid-cols-1 gap-10 sm:grid-cols-3">
+			<nav aria-label="Secciones">
+				<h3 class="text-sm font-medium text-on-dark">Secciones</h3>
+				<ul class="mt-4 space-y-2 text-sm">
+					<li><a href="/" class="transition-colors hover:text-on-dark">Inicio</a></li>
+					<li><a href="/blog" class="transition-colors hover:text-on-dark">Blog</a></li>
+					<li><a href="/rss.xml" class="transition-colors hover:text-on-dark">RSS</a></li>
+				</ul>
+			</nav>
+
+			<nav aria-label="Enlaces">
+				<h3 class="text-sm font-medium text-on-dark">Enlaces</h3>
+				{
+					site.links.length > 0 ? (
+						<ul class="mt-4 space-y-2 text-sm">
+							{site.links.map((link) => (
+								<li>
+									<a href={link.href} class="transition-colors hover:text-on-dark" rel="noopener noreferrer">
+										{link.label}
+									</a>
+								</li>
+							))}
+						</ul>
+					) : (
+						<ul class="mt-4 space-y-2" aria-hidden="true">
+							<li><span class="wire-line block w-28 opacity-40" /></li>
+							<li><span class="wire-line block w-20 opacity-40" /></li>
+							<li><span class="wire-line block w-24 opacity-40" /></li>
+						</ul>
+					)
+				}
+			</nav>
+
+			<div>
+				<h3 class="text-sm font-medium text-on-dark">Contacto</h3>
+				<p class="mt-4 text-sm">
+					<a
+						href="https://api.whatsapp.com/send/?phone=56930599095&amp;text&amp;type=phone_number&amp;app_absent=0"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="transition-colors hover:text-on-dark"
+					>
+						WhatsApp
+					</a>
+				</p>
+			</div>
+		</div>
+
+		<div class="mt-14 border-t border-surface-dark-elevated pt-6 text-sm text-on-dark-soft">
+			<p>© {year} {site.name} — {site.domain}</p>
+		</div>
+	</div>
+</footer>

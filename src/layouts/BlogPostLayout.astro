@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets'
+// Layout de lectura: hero, metadatos, prosa editorial y contador de vistas.
+import type { CollectionEntry } from 'astro:content'
+import FormattedDate from '../components/FormattedDate.astro'
+import PostViews from '../components/PostViews.astro'
+import { readingMinutes } from '../utils/reading'
+import { tagToSlug } from '../utils/tags'
+
+interface Props {
+	post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+const minutes = readingMinutes(post.body)
+---
+
+<!-- data-pagefind-body: solo los artículos entran al índice de búsqueda -->
+<article data-pagefind-body class="mx-auto w-full max-w-[43.75rem] px-6 py-24">
+	<header>
+		<ul class="flex flex-wrap gap-2" role="list">
+			{
+				post.data.tags.map((tag) => (
+					<li>
+						<a href={`/tags/${tagToSlug(tag)}`} class="badge-pill">
+							{tag}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+
+		<h1 class="display-lg mt-6">{post.data.title}</h1>
+
+		<div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted">
+			<span>
+				Publicado el <FormattedDate date={post.data.pubDate} />
+			</span>
+			{
+				post.data.updatedDate && (
+					<span>
+						Actualizado el <FormattedDate date={post.data.updatedDate} />
+					</span>
+				)
+			}
+			<span aria-hidden="true">·</span>
+			<span>{minutes} min de lectura</span>
+			<span aria-hidden="true">·</span>
+			<PostViews slug={post.id} server:defer>
+				<span slot="fallback" class="wire-line inline-block w-24 align-middle opacity-70" style="height: 0.7rem;" />
+			</PostViews>
+		</div>
+
+		{
+			post.data.heroImage && (
+				<Image
+					src={post.data.heroImage}
+					alt={post.data.title}
+					width={1200}
+					height={630}
+					loading="eager"
+					class="mt-10 w-full rounded-xl border border-hairline"
+				/>
+			)
+		}
+	</header>
+
+	<div class="prose-post prose mt-12 max-w-none prose-headings:scroll-mt-24 prose-a:font-medium">
+		<slot />
+	</div>
+
+	<footer class="mt-16 border-t border-hairline pt-8">
+		<a href="/blog" class="text-link text-sm">← Volver al blog</a>
+	</footer>
+</article>

@@ -1,0 +1,48 @@
+---
+// Banda callout full-bleed en color primario (verde fern): aquí SÍ es generoso.
+// Sin datos: titular y botón wireframe en tono invertido.
+import { site } from '../../data/site'
+---
+
+<section class="pb-24">
+	<div class="mx-auto w-full max-w-[75rem] px-6 md:px-8">
+		<div class="rounded-lg bg-primary px-6 py-12 text-center md:px-16 md:py-16">
+			<h2 class="display-sm text-on-primary">
+				{
+					site.cta ? (
+						site.cta.title
+					) : (
+						<span class="mx-auto block w-64 max-w-full opacity-60" aria-hidden="true">
+							<span class="wire-line block w-full bg-white/30" style="height: 1.75rem;" />
+						</span>
+					)
+				}
+			</h2>
+			<div class="mx-auto mt-4 max-w-xl">
+				{
+					site.cta ? (
+						<p class="text-on-primary/90">{site.cta.description}</p>
+					) : (
+						<div class="space-y-2" aria-hidden="true">
+							<span class="wire-line mx-auto block w-full bg-white/25" />
+							<span class="wire-line mx-auto block w-2/3 bg-white/25" />
+						</div>
+					)
+				}
+			</div>
+			<div class="mt-8">
+				{
+					site.cta ? (
+						<a href={site.cta.button.href} class="btn-secondary">
+							{site.cta.button.label}
+						</a>
+					) : (
+						<span class="btn-secondary border-white/40 bg-transparent text-on-primary" aria-hidden="true">
+							<span class="wire-line block w-20 bg-white/40" style="height: 0.6rem;" />
+						</span>
+					)
+				}
+			</div>
+		</div>
+	</div>
+</section>
