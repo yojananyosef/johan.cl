@@ -14,7 +14,7 @@ export async function getStaticPaths() {
 	const siteDefault: GetStaticPathsItem = {
 		params: { slug: 'johan' },
 		props: {
-			title: 'Notas de tecnología y teología',
+			title: 'Notas de teología y tecnología',
 			tags: [],
 		},
 	}

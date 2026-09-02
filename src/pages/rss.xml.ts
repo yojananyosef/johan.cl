@@ -11,7 +11,7 @@ export async function GET(context: APIContext) {
 
 	return rss({
 		title: 'johan.cl',
-		description: 'Notas de tecnología y teología.',
+		description: 'Notas de teología y tecnología.',
 		site: context.site ?? 'https://johan.cl',
 		items: posts.map((post) => ({
 			title: post.data.title,

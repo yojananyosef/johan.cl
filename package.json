@@ -11,7 +11,7 @@
     "check": "wrangler types && bun --bun astro check",
     "lint": "bun x biome check src/",
     "types": "wrangler types",
-    "deploy": "bun run build && bunx wrangler deploy"
+    "deploy": "bun run build && bunx wrangler deploy && bunx wrangler deploy -c workers/www-redirect/wrangler.jsonc"
   },
   "keywords": [
     "astro",

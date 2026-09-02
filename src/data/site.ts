@@ -61,7 +61,7 @@ export interface SiteData {
 export const site: SiteData = {
 	name: 'Johan Gutierrez',
 	domain: 'johan.cl',
-	description: 'Sitio personal de Johan — notas de tecnología y teología.',
+	description: 'Sitio personal de Johan — notas de teología y tecnología.',
 	bio: 'Hijo de Dios, seguidor de Jesús y adventista. Lo que creo me define antes que lo que hago: estudio Teología y soy Técnico de Nivel Superior en Programación y Análisis de Sistemas.',
 	links: [{ label: 'GitHub', href: 'https://github.com/yojananyosef' }],
 	features: [],

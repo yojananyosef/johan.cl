@@ -12,7 +12,7 @@ bun run dev      # astro dev (workerd vía plugin de Cloudflare)
 bun run build    # astro build + pagefind --site dist/client
 bun run check    # wrangler types && astro check
 bun run lint     # biome check src/
-bun run deploy   # build + wrangler deploy
+bun run deploy   # build + wrangler deploy (sitio) + deploy del worker de redirección www→apex
 ```
 
 ## Convenciones críticas
