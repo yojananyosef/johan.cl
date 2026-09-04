@@ -89,8 +89,10 @@ import Search from './search/Search.svelte'
 		</div>
 	</div>
 
-	<!-- Isla de búsqueda: único JS de framework del shell (client:idle) -->
-	<Search client:idle />
+	<!-- Isla de búsqueda: único JS de framework del shell.
+	     client:only (sin SSR): el Portal del Dialog teleporta nodos al body
+	     y eso rompe la hidratación si se prerenderiza (crash en get_next_sibling). -->
+	<Search client:only="svelte" />
 
 	<style>
 		.theme-icon-dark {

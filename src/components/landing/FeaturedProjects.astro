@@ -29,18 +29,27 @@ const placeholders = [0, 1, 2]
 				site.projects.length > 0
 					? site.projects.map((project) => (
 							<li class="rounded-lg border border-hairline p-5 transition-colors hover:border-muted-soft">
-								<a href={project.url} class="block" rel="noopener noreferrer">
-									<div class="flex items-center justify-between gap-3">
-										<span class="text-base font-medium text-ink">{project.name}</span>
-										<span class={statusBadge[project.status] ?? 'badge-pill'}>{project.status}</span>
-									</div>
-									<p class="mt-2 text-sm text-body">{project.description}</p>
+								<div class="flex items-center justify-between gap-3">
+									<a
+										href={project.url}
+										class="text-base font-medium text-ink hover:underline"
+										rel="noopener noreferrer"
+									>
+										{project.name}
+									</a>
+									<span class={statusBadge[project.status] ?? 'badge-pill'}>{project.status}</span>
+								</div>
+								<p class="mt-2 text-sm text-body">{project.description}</p>
+								<p class="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+									<a href={project.url} class="text-link" rel="noopener noreferrer">
+										Abrir app →
+									</a>
 									{project.repo && (
-										<p class="mt-3 text-sm">
-											<span class="text-link">Repositorio</span>
-										</p>
+										<a href={project.repo} class="text-link" rel="noopener noreferrer">
+											Repositorio →
+										</a>
 									)}
-								</a>
+								</p>
 							</li>
 						))
 					: placeholders.map(() => (

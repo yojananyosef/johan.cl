@@ -1,6 +1,6 @@
 <script lang="ts">
 // Modal de búsqueda (Svelte 5, solo runes) sobre el índice de Pagefind.
-// Se monta con client:idle y carga el runtime perezosamente al abrir.
+// Se monta con client:only (sin SSR: el Portal teleporta nodos y rompería la hidratación).
 import { Dialog } from 'bits-ui'
 
 interface PagefindResult {

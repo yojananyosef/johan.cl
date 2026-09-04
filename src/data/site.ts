@@ -40,7 +40,7 @@ export interface SiteMetric {
 
 export interface SiteCta {
 	title: string
-	description: string
+	description?: string
 	button: SiteLink
 }
 
@@ -65,6 +65,19 @@ export const site: SiteData = {
 	bio: 'Hijo de Dios, seguidor de Jesús y adventista. Lo que creo me define antes que lo que hago: estudio Teología y soy Técnico de Nivel Superior en Programación y Análisis de Sistemas.',
 	links: [{ label: 'GitHub', href: 'https://github.com/yojananyosef' }],
 	features: [],
-	projects: [],
+	projects: [
+		{
+			name: 'Aletheia Reader',
+			description:
+				'Lector bíblico accesible con narración en audio, 9 versiones en español, modo sin conexión y accesibilidad WCAG 2.2 AAA.',
+			url: 'https://aletheiareader.johan.cl',
+			repo: 'https://github.com/yojananyosef/aletheia-reader',
+			status: 'live',
+		},
+	],
 	metrics: [],
+	cta: {
+		title: '¿Estudiamos juntos?',
+		button: { label: 'Leer el blog', href: '/blog' },
+	},
 }

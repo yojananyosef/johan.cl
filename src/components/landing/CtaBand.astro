@@ -20,7 +20,7 @@ import { site } from '../../data/site'
 			</h2>
 			<div class="mx-auto mt-4 max-w-xl">
 				{
-					site.cta ? (
+					site.cta?.description ? (
 						<p class="text-on-primary/90">{site.cta.description}</p>
 					) : (
 						<div class="space-y-2" aria-hidden="true">

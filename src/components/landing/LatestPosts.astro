@@ -1,5 +1,6 @@
 ---
-// Los 3 posts más recientes publicados; completa el grid con tiles wireframe.
+// Los 3 posts más recientes publicados. Sin posts: 3 tiles wireframe;
+// con al menos uno, solo se muestran los reales (sin relleno skeleton).
 import { getCollection } from 'astro:content'
 import FormattedDate from '../FormattedDate.astro'
 
@@ -7,7 +8,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
 	.slice(0, 3)
 
-const placeholders = Array.from({ length: Math.max(0, 3 - posts.length) })
+const placeholders = posts.length === 0 ? [0, 1, 2] : []
 ---
 
 <section class="bg-surface-soft py-24">
