@@ -50,3 +50,14 @@ Los posts académicos pueden activar el bloque de citación con
 en estilo Chicago (autor, título, sitio, fecha, URL) más la línea de
 copyright con permiso de cita con atribución. La autoría legible por
 máquinas ya viaja en el JSON-LD (`BlogPosting.author`) de cada artículo.
+
+## SEO social y tarjetas de compartir
+
+- Cada post genera su banner OG en `dist/client/og/<slug>.png` (Satori +
+  resvg, plantilla en `src/utils/og.ts`): tarjeta oscura con monograma,
+  título serif y tags. Si cambias la plantilla, el PNG cambia en el build.
+- WhatsApp cachea agresivamente los previews **por URL exacta**: tras
+  modificar un banner o los tags, prueba compartir con `?v=N` nuevo
+  (ej. `?v=3`) para forzar un scrapeo fresco.
+- `public/robots.txt` + `src/pages/sitemap.xml.ts` (home, blog, posts,
+  tags, paginación) cubren la indexación base.

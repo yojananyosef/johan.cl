@@ -35,7 +35,17 @@ const jsonLd = {
 }
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description} image={ogImage} type="article">
+<BaseLayout
+	title={post.data.title}
+	description={post.data.description}
+	image={ogImage}
+	type="article"
+	imageAlt={post.data.title}
+	publishedTime={post.data.pubDate.toISOString()}
+	modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
+	authorName={site.name}
+	tags={post.data.tags}
+>
 	<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	<BlogPostLayout post={post}>
 		<Content />
