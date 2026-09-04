@@ -2,7 +2,7 @@
 import { site } from '../data/site'
 // Navbar 64px sobre canvas: monograma + nombre, nav mínima, tema y búsqueda.
 // Sin frameworks: el toggle usa delegación de eventos (sobrevive <ClientRouter />).
-import Search from './search/Search.svelte'
+import Finder from './search/Finder.svelte'
 ---
 
 <header class="sticky top-0 z-40 border-b border-hairline bg-canvas">
@@ -91,8 +91,12 @@ import Search from './search/Search.svelte'
 
 	<!-- Isla de búsqueda: único JS de framework del shell.
 	     client:only (sin SSR): el Portal del Dialog teleporta nodos al body
-	     y eso rompe la hidratación si se prerenderiza (crash en get_next_sibling). -->
-	<Search client:only="svelte" />
+	     y eso rompe la hidratación si se prerenderiza (crash en get_next_sibling).
+	     El chunk se llama Finder.*.js a propósito: los nombres con "search" los
+	     cazan las listas de bloqueo y dejaban el botón Buscar muerto. Si aun así
+	     la isla no carga (bloqueador agresivo), el fallback inline de abajo abre
+	     una búsqueda externa para que el botón nunca quede muerto. -->
+	<Finder client:only="svelte" />
 
 	<style>
 		.theme-icon-dark {
@@ -118,6 +122,24 @@ import Search from './search/Search.svelte'
 				localStorage.setItem('theme', next);
 			} catch {
 				/* almacenamiento no disponible */
+			}
+		});
+		// Fallback de búsqueda: si la isla Svelte no marcó searchReady es porque
+		// un bloqueador impidió cargar su chunk; el botón abre DuckDuckGo con
+		// site:johan.cl en pestaña nueva en vez de quedar muerto. Cuando la isla
+		// sí carga, ella maneja el clic y este handler no hace nada.
+		document.addEventListener('click', (event) => {
+			if (document.documentElement.dataset.searchReady === 'true') return;
+			const trigger = event.target instanceof Element ? event.target.closest('[data-search-open]') : null;
+			if (!trigger) return;
+			event.preventDefault();
+			window.open('https://duckduckgo.com/?q=' + encodeURIComponent('site:johan.cl'), '_blank', 'noopener');
+		});
+		document.addEventListener('keydown', (event) => {
+			if (document.documentElement.dataset.searchReady === 'true') return;
+			if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+				event.preventDefault();
+				window.open('https://duckduckgo.com/?q=' + encodeURIComponent('site:johan.cl'), '_blank', 'noopener');
 			}
 		});
 	</script>

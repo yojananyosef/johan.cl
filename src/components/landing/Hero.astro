@@ -39,10 +39,11 @@ import { site } from '../../data/site'
 			</div>
 		</div>
 
-		<!-- Versículos destacados (RVC): rotación con JS vanilla inline.
-		     Inline a propósito: los bloqueadores que interceptan los bundles
-		     /_astro/*.js no pueden bloquear este script (viaja en el HTML).
-		     Sin JS o con movimiento reducido queda fijo el primero. -->
+		<!-- Versículos destacados (RVC): uno al azar por visita, elegido con
+		     JS vanilla inline y síncrono (corre antes del primer pintado:
+		     no hay fundidos ni parpadeos). Inline a propósito: los bloqueadores
+		     que interceptan los bundles /_astro/*.js no pueden bloquear este
+		     script (viaja en el HTML). Sin JS queda fijo el primero. -->
 		<div
 			class="flex aspect-[4/3] flex-col rounded-xl border border-hairline bg-surface-card p-8 md:p-10"
 			role="group"
@@ -55,14 +56,14 @@ import { site } from '../../data/site'
 					</blockquote>
 					<figcaption class="mt-4 text-sm text-muted">Juan 8:32 · RVC</figcaption>
 				</figure>
-				<figure class="verse" aria-hidden="true">
+				<figure class="verse" hidden aria-hidden="true">
 					<blockquote class="font-display text-2xl leading-snug text-body-strong md:text-3xl">
 						«Yo soy el camino, y la verdad, y la vida; nadie viene al Padre, sino por
 						mí.»
 					</blockquote>
 					<figcaption class="mt-4 text-sm text-muted">Juan 14:6 · RVC</figcaption>
 				</figure>
-				<figure class="verse" aria-hidden="true">
+				<figure class="verse" hidden aria-hidden="true">
 					<blockquote class="font-display text-2xl leading-snug text-body-strong md:text-3xl">
 						«Santifícalos en tu verdad; tu palabra es verdad.»
 					</blockquote>
@@ -75,32 +76,19 @@ import { site } from '../../data/site'
 		</div>
 
 		<script is:inline>
-			// Rotador de versículos: avanza uno cada 6s con fundido.
+			// Un versículo al azar por visita.
 			(() => {
-				let timer;
-				const PERIOD = 6000;
-				function init() {
-					if (timer) clearInterval(timer);
-					timer = undefined;
-					const stage = document.querySelector('[data-verses]');
-					if (!stage) return;
-					const verses = Array.from(stage.querySelectorAll('.verse'));
-					if (verses.length < 2) return;
-					if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-					let i = 0;
-					timer = window.setInterval(() => {
-						if (!stage.isConnected) {
-							if (timer) clearInterval(timer);
-							timer = undefined;
-							return;
-						}
-						verses[i].classList.remove('is-active');
-						i = (i + 1) % verses.length;
-						verses[i].classList.add('is-active');
-					}, PERIOD);
-				}
-				init();
-				document.addEventListener('astro:after-swap', init);
+				const stage = document.querySelector('[data-verses]');
+				if (!stage) return;
+				const verses = Array.from(stage.querySelectorAll('.verse'));
+				if (verses.length < 2) return;
+				const pick = Math.floor(Math.random() * verses.length);
+				verses.forEach((v, i) => {
+					const active = i === pick;
+					v.classList.toggle('is-active', active);
+					v.toggleAttribute('hidden', !active);
+					v.setAttribute('aria-hidden', active ? 'false' : 'true');
+				});
 			})();
 		</script>
 	</div>

@@ -409,8 +409,8 @@
 	text-indent: -1.5em;
 }
 
-/* Versículos del hero: el JS inline alterna .is-active cada 6s.
-   Sin JS (o con movimiento reducido) queda fijo el primero. */
+/* Versículo del hero: el JS inline muestra uno al azar por visita.
+   Estático, sin animación. Sin JS queda fijo el primero. */
 .verse-stage .verse {
 	position: absolute;
 	inset: 0;
@@ -418,14 +418,7 @@
 	flex-direction: column;
 	justify-content: center;
 	margin: 0;
-	opacity: 0;
-	transition: opacity 0.9s ease;
 }
-.verse-stage .verse.is-active {
-	opacity: 1;
-}
-@media (prefers-reduced-motion: reduce) {
-	.verse-stage .verse {
-		transition: none;
-	}
+.verse-stage .verse[hidden] {
+	display: none;
 }

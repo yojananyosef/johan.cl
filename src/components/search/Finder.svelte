@@ -89,6 +89,13 @@ function onDocumentClick(event: MouseEvent): void {
 }
 
 $effect(() => {
+	// Señal para el fallback inline del header: la isla cargó, el modal funciona.
+	// Si un bloqueador impide cargar este chunk, la señal nunca se marca y el
+	// botón [data-search-open] abre una búsqueda externa en su lugar.
+	document.documentElement.dataset.searchReady = 'true'
+})
+
+$effect(() => {
 	if (!open) {
 		query = ''
 		results = []
