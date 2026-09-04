@@ -28,3 +28,25 @@ Sirven como referencia de los dos formatos soportados:
 
 3. `bun run dev` para previsualizar; `bun run build` valida el schema Zod
    (falla si `title`/`description` exceden los límites).
+
+## Notas académicas (orden Chicago/Turabian)
+
+Astro relega las footnotes `[^n]` al final del documento, **después** de la
+bibliografía. En posts académicos usa endnotes manuales para mantener el
+orden Notas → Bibliografía (ver `inspiracion-y-uso-de-fuentes-en-la-biblia.md`):
+
+- En el cuerpo: `<sup><a href="#n1" id="ref1">1</a></sup>`.
+- Al final: `## Notas` con `<div class="endnotes">` + lista ordenada
+  `1. <a id="n1"></a>Texto de la nota. [↩](#ref1)`, y después `## Bibliografía`.
+- Los índices heredan el estilo editorial (serif + verde fern) desde
+  `.prose-post .endnotes` en `src/styles/global.css`.
+- Los párrafos del cuerpo llevan sangría de primera línea (Turabian); el de
+  apertura y el que sigue a un encabezado van sin sangría.
+
+## Atribución (cómo citar)
+
+Los posts académicos pueden activar el bloque de citación con
+`showCitation: true` en el frontmatter. El layout muestra una cita sugerida
+en estilo Chicago (autor, título, sitio, fecha, URL) más la línea de
+copyright con permiso de cita con atribución. La autoría legible por
+máquinas ya viaja en el JSON-LD (`BlogPosting.author`) de cada artículo.
