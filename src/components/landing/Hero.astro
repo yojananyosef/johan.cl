@@ -39,28 +39,30 @@ import { site } from '../../data/site'
 			</div>
 		</div>
 
-		<!-- Versículos destacados (RVC): rotación crossfade solo con CSS,
-		     sin JavaScript. Con movimiento reducido queda fijo el primero. -->
+		<!-- Versículos destacados (RVC): rotación con JS vanilla inline.
+		     Inline a propósito: los bloqueadores que interceptan los bundles
+		     /_astro/*.js no pueden bloquear este script (viaja en el HTML).
+		     Sin JS o con movimiento reducido queda fijo el primero. -->
 		<div
 			class="flex aspect-[4/3] flex-col rounded-xl border border-hairline bg-surface-card p-8 md:p-10"
 			role="group"
 			aria-label="Versículos destacados"
 		>
-			<div class="verse-stage relative flex-1">
-				<figure class="verse verse-1">
+			<div class="verse-stage relative flex-1" data-verses>
+				<figure class="verse is-active">
 					<blockquote class="font-display text-2xl leading-snug text-body-strong md:text-3xl">
 						«Y conocerán la verdad, y la verdad los hará libres.»
 					</blockquote>
 					<figcaption class="mt-4 text-sm text-muted">Juan 8:32 · RVC</figcaption>
 				</figure>
-				<figure class="verse verse-2" aria-hidden="true">
+				<figure class="verse" aria-hidden="true">
 					<blockquote class="font-display text-2xl leading-snug text-body-strong md:text-3xl">
 						«Yo soy el camino, y la verdad, y la vida; nadie viene al Padre, sino por
 						mí.»
 					</blockquote>
 					<figcaption class="mt-4 text-sm text-muted">Juan 14:6 · RVC</figcaption>
 				</figure>
-				<figure class="verse verse-3" aria-hidden="true">
+				<figure class="verse" aria-hidden="true">
 					<blockquote class="font-display text-2xl leading-snug text-body-strong md:text-3xl">
 						«Santifícalos en tu verdad; tu palabra es verdad.»
 					</blockquote>
@@ -71,5 +73,35 @@ import { site } from '../../data/site'
 				Reina Valera Contemporánea © 2009, 2011 Sociedades Bíblicas Unidas
 			</p>
 		</div>
+
+		<script is:inline>
+			// Rotador de versículos: avanza uno cada 6s con fundido.
+			(() => {
+				let timer;
+				const PERIOD = 6000;
+				function init() {
+					if (timer) clearInterval(timer);
+					timer = undefined;
+					const stage = document.querySelector('[data-verses]');
+					if (!stage) return;
+					const verses = Array.from(stage.querySelectorAll('.verse'));
+					if (verses.length < 2) return;
+					if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+					let i = 0;
+					timer = window.setInterval(() => {
+						if (!stage.isConnected) {
+							if (timer) clearInterval(timer);
+							timer = undefined;
+							return;
+						}
+						verses[i].classList.remove('is-active');
+						i = (i + 1) % verses.length;
+						verses[i].classList.add('is-active');
+					}, PERIOD);
+				}
+				init();
+				document.addEventListener('astro:after-swap', init);
+			})();
+		</script>
 	</div>
 </section>

@@ -409,8 +409,8 @@
 	text-indent: -1.5em;
 }
 
-/* Rotador de versículos del hero — crossfade solo con CSS, cero JavaScript.
-   Ciclo de 18s (6s por versículo); con movimiento reducido queda fijo el primero. */
+/* Versículos del hero: el JS inline alterna .is-active cada 6s.
+   Sin JS (o con movimiento reducido) queda fijo el primero. */
 .verse-stage .verse {
 	position: absolute;
 	inset: 0;
@@ -419,39 +419,13 @@
 	justify-content: center;
 	margin: 0;
 	opacity: 0;
-	animation: verse-cycle 18s ease-in-out infinite;
+	transition: opacity 0.9s ease;
 }
-.verse-stage .verse-2 {
-	animation-delay: 6s;
-}
-.verse-stage .verse-3 {
-	animation-delay: 12s;
-}
-@keyframes verse-cycle {
-	0% {
-		opacity: 0;
-	}
-	4% {
-		opacity: 1;
-	}
-	29% {
-		opacity: 1;
-	}
-	33.5%,
-	100% {
-		opacity: 0;
-	}
+.verse-stage .verse.is-active {
+	opacity: 1;
 }
 @media (prefers-reduced-motion: reduce) {
 	.verse-stage .verse {
-		animation: none;
-	}
-	.verse-stage .verse-1 {
-		position: static;
-		opacity: 1;
-	}
-	.verse-stage .verse-2,
-	.verse-stage .verse-3 {
-		display: none;
+		transition: none;
 	}
 }
