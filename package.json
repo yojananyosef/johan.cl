@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "bun --bun astro dev",
-    "build": "bun --bun astro build && pagefind --site dist/client",
+    "build": "astro build && pagefind --site dist/client",
     "preview": "bun --bun astro preview",
     "check": "wrangler types && bun --bun astro check",
     "lint": "bun x biome check src/",

@@ -4,6 +4,9 @@
 
 - **Bun** para todo (`bun install`, `bun run <script>`, `bunx`). Nunca npm/pnpm/yarn.
 - Node ≥ 22.12 (requisito de Astro 7); `mise.toml` fija bun + node 22.
+- El script `build` corre `astro build` **sin** el flag `bun --bun`: el Bun 1.2.15
+  de Cloudflare Builds reporta Node v22.6.0 y Astro 7 exige ≥22.12; sin el flag
+  usa el Node real del entorno. No reintroducir `--bun` en `build`.
 
 ## Comandos
 
