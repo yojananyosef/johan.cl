@@ -44,8 +44,22 @@ export interface SiteCta {
 	button: SiteLink
 }
 
+export interface SiteAuthor {
+	display: string
+	first: string
+	last: string
+}
+
+export interface SiteLicense {
+	id: string
+	name: string
+	url: string
+}
+
 export interface SiteData {
 	name: string
+	author: SiteAuthor
+	license: SiteLicense
 	domain: string
 	description: string
 	headline?: string
@@ -59,7 +73,13 @@ export interface SiteData {
 }
 
 export const site: SiteData = {
-	name: 'Johan Gutierrez',
+	name: 'Johan Gutiérrez',
+	author: { display: 'Johan Gutiérrez', first: 'Johan', last: 'Gutiérrez' },
+	license: {
+		id: 'CC-BY-NC-ND-4.0',
+		name: 'CC BY-NC-ND 4.0',
+		url: 'https://creativecommons.org/licenses/by-nc-nd/4.0/deed.es',
+	},
 	domain: 'johan.cl',
 	description: 'Sitio personal de Johan — notas de teología y tecnología.',
 	bio: 'Hijo de Dios, seguidor de Jesús y adventista. Lo que creo me define antes que lo que hago: estudio Teología y soy Técnico de Nivel Superior en Programación y Análisis de Sistemas.',

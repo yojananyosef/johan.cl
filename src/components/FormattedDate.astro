@@ -4,14 +4,16 @@ interface Props {
 }
 
 const { date } = Astro.props
+// Las fechas del frontmatter son días calendario (YYYY-MM-DD → medianoche UTC).
+// Formatear en UTC evita que el build muestre el día anterior en zonas UTC-4/UTC-6.
+const label = date.toLocaleDateString('es-CL', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+	timeZone: 'UTC',
+})
 ---
 
 <time datetime={date.toISOString()}>
-	{
-		date.toLocaleDateString('es-CL', {
-			year: 'numeric',
-			month: 'long',
-			day: 'numeric',
-		})
-	}
+	{label}
 </time>

@@ -68,6 +68,13 @@ const year = new Date().getFullYear()
 
 		<div class="mt-14 border-t border-surface-dark-elevated pt-6 text-sm text-on-dark-soft">
 			<p>© {year} {site.name} — {site.domain}</p>
+			<p class="mt-2">
+				Contenido bajo{' '}
+				<a href={site.license.url} rel="license" class="transition-colors hover:text-on-dark">
+					{site.license.name}
+				</a>{' '}
+				(no comercial, sin derivados) · Código MIT
+			</p>
 		</div>
 	</div>
 </footer>

@@ -19,7 +19,7 @@
     "svelte",
     "blog"
   ],
-  "author": "Johan Gutierrez",
+  "author": "Johan Gutiérrez",
   "license": "MIT",
   "dependencies": {
     "@astrojs/cloudflare": "^14.2.6",

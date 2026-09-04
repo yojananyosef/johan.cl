@@ -2,9 +2,9 @@
 import { Image } from 'astro:assets'
 // Layout de lectura: hero, metadatos, prosa editorial y contador de vistas.
 import type { CollectionEntry } from 'astro:content'
+import Citation from '../components/Citation.astro'
 import FormattedDate from '../components/FormattedDate.astro'
 import PostViews from '../components/PostViews.astro'
-import { site } from '../data/site'
 import { readingMinutes } from '../utils/reading'
 import { tagToSlug } from '../utils/tags'
 
@@ -14,8 +14,6 @@ interface Props {
 
 const { post } = Astro.props
 const minutes = readingMinutes(post.body)
-// URL canónica del artículo para la cita (coincide con el canonical de [slug].astro).
-const citeUrl = `https://${site.domain}/blog/${post.id}`
 ---
 
 <!-- data-pagefind-body: solo los artículos entran al índice de búsqueda -->
@@ -75,20 +73,7 @@ const citeUrl = `https://${site.domain}/blog/${post.id}`
 	<footer class="mt-16 border-t border-hairline pt-8">
 		{
 			post.data.showCitation && (
-				<section aria-label="Cómo citar este artículo" class="mb-8 rounded-xl border border-hairline bg-surface-soft p-6">
-					<h2 class="display-sm">Cómo citar este artículo</h2>
-					<p class="mt-3 text-sm leading-relaxed">
-						{site.name}. «{post.data.title}». {site.domain},{' '}
-						<FormattedDate date={post.data.pubDate} />.{' '}
-						<a class="text-link break-all" href={citeUrl}>
-							{citeUrl}
-						</a>
-					</p>
-					<p class="mt-3 text-sm text-muted">
-						© {post.data.pubDate.getFullYear()} {site.name}. Se permite citar y
-						compartir este artículo con atribución al autor.
-					</p>
-				</section>
+				<Citation post={post} />
 			)
 		}
 		<a href="/blog" class="text-link text-sm">← Volver al blog</a>

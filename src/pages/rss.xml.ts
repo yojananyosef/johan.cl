@@ -1,6 +1,7 @@
 import { getCollection } from 'astro:content'
 import rss from '@astrojs/rss'
 import type { APIContext } from 'astro'
+import { site } from '../data/site'
 
 export const prerender = true
 
@@ -20,6 +21,6 @@ export async function GET(context: APIContext) {
 			link: `/blog/${post.id}/`,
 			categories: post.data.tags,
 		})),
-		customData: '<language>es-cl</language>',
+		customData: `<language>es-cl</language><copyright>© ${site.author.display} — Contenido bajo ${site.license.id} (${site.license.url})</copyright>`,
 	})
 }

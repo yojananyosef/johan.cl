@@ -12,7 +12,8 @@ const blog = defineCollection({
 			heroImage: image().optional(),
 			tags: z.array(z.string()).default([]),
 			draft: z.boolean().default(false),
-			// Muestra el bloque "Cómo citar este artículo" (atribución + copyright).
+			// Muestra el bloque "Cómo citar este artículo" (nota + bibliografía
+			// Turabian en español, con botón copiar, + línea CC BY-NC-ND).
 			showCitation: z.boolean().default(false),
 		}),
 })

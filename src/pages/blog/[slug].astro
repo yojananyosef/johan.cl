@@ -27,7 +27,10 @@ const jsonLd = {
 	description: post.data.description,
 	datePublished: post.data.pubDate.toISOString(),
 	dateModified: (post.data.updatedDate ?? post.data.pubDate).toISOString(),
-	author: { '@type': 'Person', name: site.name, url: Astro.site?.href },
+	author: { '@type': 'Person', name: site.author.display, url: Astro.site?.href },
+	copyrightHolder: { '@type': 'Person', name: site.author.display },
+	copyrightYear: post.data.pubDate.getUTCFullYear(),
+	license: site.license.url,
 	mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
 	image: ogImage,
 	inLanguage: 'es-CL',
@@ -43,7 +46,7 @@ const jsonLd = {
 	imageAlt={post.data.title}
 	publishedTime={post.data.pubDate.toISOString()}
 	modifiedTime={(post.data.updatedDate ?? post.data.pubDate).toISOString()}
-	authorName={site.name}
+	authorName={site.author.display}
 	tags={post.data.tags}
 >
 	<script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />

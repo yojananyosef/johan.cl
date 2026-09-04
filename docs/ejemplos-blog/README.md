@@ -38,6 +38,9 @@ orden Notas → Bibliografía (ver `inspiracion-y-uso-de-fuentes-en-la-biblia.md
 - En el cuerpo: `<sup><a href="#n1" id="ref1">1</a></sup>`.
 - Al final: `## Notas` con `<div class="endnotes">` + lista ordenada
   `1. <a id="n1"></a>Texto de la nota. [↩](#ref1)`, y después `## Bibliografía`.
+  El markdown dentro del `div` sí se convierte a `<ol>/<ul>` en el build
+  (verificado en `dist/`); el CSS asume `<li><p>` y pone la sangría en el
+  primer párrafo.
 - Los índices heredan el estilo editorial (serif + verde fern) desde
   `.prose-post .endnotes` en `src/styles/global.css`.
 - Los párrafos del cuerpo llevan sangría de primera línea (Turabian); el de
@@ -45,11 +48,30 @@ orden Notas → Bibliografía (ver `inspiracion-y-uso-de-fuentes-en-la-biblia.md
 
 ## Atribución (cómo citar)
 
-Los posts académicos pueden activar el bloque de citación con
-`showCitation: true` en el frontmatter. El layout muestra una cita sugerida
-en estilo Chicago (autor, título, sitio, fecha, URL) más la línea de
-copyright con permiso de cita con atribución. La autoría legible por
-máquinas ya viaja en el JSON-LD (`BlogPosting.author`) de cada artículo.
+Los posts académicos activan el bloque de citación con `showCitation: true`
+en el frontmatter. El componente `src/components/Citation.astro` muestra dos
+formatos Turabian en español (comillas «»):
+
+- **Nota:** `Nombre Apellido, «Título», johan.cl, fecha, URL`.
+- **Bibliografía:** `Apellido, Nombre. «Título». johan.cl, fecha. URL`
+  (+ `Actualizado el …` si el post tiene `updatedDate`).
+
+Cada formato trae botón copiar (clipboard + fallback, delegación en
+`document` para sobrevivir al `<ClientRouter />`). La autoría sale de
+`site.author` en `src/data/site.ts` y la URL canónica es
+`https://johan.cl/blog/<slug>`.
+
+Fechas del frontmatter son días calendario: `FormattedDate` y la cita
+formatean en `timeZone: 'UTC'` para que el build no muestre el día anterior.
+El año del copyright usa `getUTCFullYear()` por la misma razón.
+
+## Licencia del contenido
+
+El **código** es MIT (`package.json`); el **contenido** de los artículos es
+CC BY-NC-ND 4.0 (no comercial, sin derivados). La licencia vive en
+`site.license` (`src/data/site.ts`) y se declara en: bloque de cita
+(`rel="license"`), footer, `customData` del RSS y `license` +
+`copyrightHolder` del JSON-LD de cada artículo.
 
 ## SEO social y tarjetas de compartir
 

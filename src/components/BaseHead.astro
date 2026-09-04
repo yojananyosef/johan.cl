@@ -43,7 +43,7 @@ const ogImage = image ?? (Astro.site ? new URL('/og/johan.png', Astro.site).href
 <meta name="title" content={title} />
 <meta name="description" content={description} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
-<meta name="author" content="Johan Gutierrez" />
+<meta name="author" content={authorName} />
 <meta name="theme-color" media="(prefers-color-scheme: light)" content="#faf9f5" />
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#181715" />
 

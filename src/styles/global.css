@@ -367,8 +367,14 @@
 	border-radius: var(--radius-lg);
 }
 
+/* Citas en bloque (Turabian): van sin sangría de primera línea ni comillas. */
+.prose-post > blockquote p {
+	text-indent: 0;
+}
 /* Notas académicas — endnotes manuales en orden Chicago/Turabian.
-   Selectores sin :where() para prevalecer sobre el plugin typography. */
+   Selectores sin :where() para prevalecer sobre el plugin typography.
+   El markdown renderiza `<li><p>…`, así que la sangría va en el primer
+   párrafo (el text-indent del <li> no afecta al <p> anidado). */
 .prose-post sup a {
 	color: var(--primary-text);
 	font-weight: 600;
@@ -383,6 +389,15 @@
 .prose-post .endnotes > ol > li {
 	/* El header es sticky: evita que el salto de ancla oculte la nota */
 	scroll-margin-top: 6rem;
+	text-indent: 0;
+	line-height: 1.55;
+	margin-bottom: 0.5em;
+}
+.prose-post .endnotes > ol > li > p {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.prose-post .endnotes > ol > li > p:first-child {
 	/* Primera línea con sangría, según Turabian */
 	text-indent: 1.25em;
 }
@@ -407,6 +422,8 @@
 .prose-post .bibliography > ul > li {
 	padding-left: 1.5em;
 	text-indent: -1.5em;
+	line-height: 1.55;
+	margin-bottom: 0.75em;
 }
 
 /* Versículo del hero: el JS inline muestra uno al azar por visita.

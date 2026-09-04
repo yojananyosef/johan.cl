@@ -58,7 +58,6 @@ El listado SHALL paginar de a 6 posts en `/blog/page/[page]`, con `/blog` como p
 
 ### Requirement: RSS y 404
 El sitio SHALL exponer `/rss.xml` con los posts publicados (título, descripción, fecha, enlace) y una página 404 con el shell del sitio, ambas prerenderizadas.
-
 #### Scenario: Feed válido
 - **WHEN** se solicita `/rss.xml`
 - **THEN** se responde XML RSS 2.0 válido con una entrada por post publicado
@@ -66,3 +65,25 @@ El sitio SHALL exponer `/rss.xml` con los posts publicados (título, descripció
 #### Scenario: Ruta desconocida
 - **WHEN** se solicita una ruta inexistente
 - **THEN** se muestra la página 404 con navegación de vuelta a `/` y `/blog`
+
+### Requirement: Bloque de citación Turabian
+Los posts con `showCitation: true` SHALL mostrar el bloque "Cómo citar este artículo" con formato de **nota** (`Nombre Apellido, «Título», sitio, fecha, URL`) y formato de **bibliografía** (`Apellido, Nombre. «Título». sitio, fecha. URL`), cada uno con botón copiar, más la línea de licencia del contenido con enlace.
+
+#### Scenario: Formatos y copiado
+- **WHEN** se carga un artículo con `showCitation: true`
+- **THEN** se muestran la nota y la bibliografía con la URL canónica y un botón copiar por formato que copia el texto plano
+
+#### Scenario: Fecha de actualización
+- **WHEN** el post tiene `updatedDate`
+- **THEN** la bibliografía añade `Actualizado el <fecha>.` después de la fecha de publicación
+
+### Requirement: Autoría y licencia del contenido
+La autoría legible por humanos y máquinas SHALL salir de `site.author` (`Johan Gutiérrez`) y el contenido SHALL declararse bajo `site.license` (CC BY-NC-ND 4.0): bloque de cita (`rel="license"`), footer, `customData` del RSS y campos `license` + `copyrightHolder` del JSON-LD `BlogPosting`. Las fechas del frontmatter SHALL formatearse en `timeZone: 'UTC'` para mostrar el día calendario escrito.
+
+#### Scenario: Declaración de licencia
+- **WHEN** se inspecciona un artículo, el footer o el RSS
+- **THEN** la licencia CC BY-NC-ND 4.0 aparece con enlace al deed en español
+
+#### Scenario: Fecha calendario
+- **WHEN** un post declara `pubDate: 2026-09-04`
+- **THEN** la fecha visible es `4 de septiembre de 2026` independiente de la zona horaria del build
