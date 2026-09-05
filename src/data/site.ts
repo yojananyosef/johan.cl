@@ -94,6 +94,14 @@ export const site: SiteData = {
 			repo: 'https://github.com/yojananyosef/aletheia-reader',
 			status: 'live',
 		},
+		{
+			name: 'Aletheia Gateway',
+			description:
+				'Estudio bíblico comparativo: hasta 5 versiones en paralelo de un catálogo de 22, con concordancia, comentarios y referencias cruzadas.',
+			url: 'https://aletheiagateway.johan.cl/',
+			repo: 'https://github.com/yojananyosef/aletheia-gateway',
+			status: 'wip',
+		},
 	],
 	metrics: [],
 	cta: {
