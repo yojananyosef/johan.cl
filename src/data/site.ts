@@ -102,6 +102,14 @@ export const site: SiteData = {
 			repo: 'https://github.com/yojananyosef/aletheia-gateway',
 			status: 'wip',
 		},
+		{
+			name: 'Aletheia Chat',
+			description:
+				'Lectura bíblica conversacional: cada capítulo se lee como un chat entre sus protagonistas. PWA mobile-first con rutas por capítulo.',
+			url: 'https://aletheiachat.johan.cl/',
+			repo: 'https://github.com/yojananyosef/aletheia-chat',
+			status: 'wip',
+		},
 	],
 	metrics: [],
 	cta: {
