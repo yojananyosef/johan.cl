@@ -115,7 +115,23 @@ export const site: SiteData = {
 			description:
 				'Mapa interactivo de las 344.799 referencias cruzadas de la Biblia: arcos, hilos, texto original hebreo y griego, léxico Strong y glosas en español. Rust + WebAssembly.',
 			url: 'https://arcs.johan.cl/',
-			repo: 'https://github.com/yojananyosef/Aletheia-xrefs-rs',
+			repo: 'https://github.com/yojananyosef/aletheia-arcs',
+			status: 'live',
+		},
+		{
+			name: 'Aletheia Codex',
+			description:
+				'Lectura y análisis morfológico de la Biblia en hebreo, griego y latín: texto, transliteración, lexemas, glosas y sintaxis. Astro SSR + corpus Emdros.',
+			url: 'https://codex.johan.cl/',
+			repo: 'https://github.com/yojananyosef/aletheia-codex',
+			status: 'live',
+		},
+		{
+			name: 'Aletheia Timeline',
+			description:
+				'Timeline bíblico interactivo con 825 eventos, de la Creación a Apocalipsis: eras, periodos, versículos y referencias en una línea de tiempo horizontal.',
+			url: 'https://timeline.johan.cl/',
+			repo: 'https://github.com/yojananyosef/aletheia-timeline',
 			status: 'live',
 		},
 	],
