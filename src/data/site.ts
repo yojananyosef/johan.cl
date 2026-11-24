@@ -87,6 +87,14 @@ export const site: SiteData = {
 	features: [],
 	projects: [
 		{
+			name: 'Aletheia Studio',
+			description:
+				'Plataforma integral de estudio bíblico: biblioteca de 27 recursos, workspace de paneles acoplables, búsqueda FTS5, comentarios, mapas, cursos y Factbook. Flutter para escritorio y web.',
+			url: 'https://studio.johan.cl/',
+			repo: 'https://github.com/yojananyosef/aletheia',
+			status: 'live',
+		},
+		{
 			name: 'Aletheia Reader',
 			description:
 				'Lector bíblico accesible con narración en audio, 9 versiones en español, modo sin conexión y accesibilidad WCAG 2.2 AAA.',
