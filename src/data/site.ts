@@ -91,7 +91,7 @@ export const site: SiteData = {
 			description:
 				'Plataforma integral de estudio bíblico: biblioteca de 27 recursos, workspace de paneles acoplables, búsqueda FTS5, comentarios, mapas, cursos y Factbook. Flutter para escritorio y web.',
 			url: 'https://studio.johan.cl/',
-			repo: 'https://github.com/yojananyosef/aletheia',
+			repo: 'https://github.com/yojananyosef/aletheia-studio',
 			status: 'live',
 		},
 		{
