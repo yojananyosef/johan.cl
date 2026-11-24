@@ -100,7 +100,7 @@ export const site: SiteData = {
 				'Estudio bíblico comparativo: hasta 5 versiones en paralelo de un catálogo de 22, con concordancia, comentarios y referencias cruzadas.',
 			url: 'https://aletheiagateway.johan.cl/',
 			repo: 'https://github.com/yojananyosef/aletheia-gateway',
-			status: 'wip',
+			status: 'live',
 		},
 		{
 			name: 'Aletheia Chat',
@@ -108,7 +108,15 @@ export const site: SiteData = {
 				'Lectura bíblica conversacional: cada capítulo se lee como un chat entre sus protagonistas. PWA mobile-first con rutas por capítulo.',
 			url: 'https://aletheiachat.johan.cl/',
 			repo: 'https://github.com/yojananyosef/aletheia-chat',
-			status: 'wip',
+			status: 'live',
+		},
+		{
+			name: 'Aletheia Arcs',
+			description:
+				'Mapa interactivo de las 344.799 referencias cruzadas de la Biblia: arcos, hilos, texto original hebreo y griego, léxico Strong y glosas en español. Rust + WebAssembly.',
+			url: 'https://arcs.johan.cl/',
+			repo: 'https://github.com/yojananyosef/Aletheia-xrefs-rs',
+			status: 'live',
 		},
 	],
 	metrics: [],
