@@ -90,7 +90,7 @@ export const site: SiteData = {
 			name: 'Aletheia Reader',
 			description:
 				'Lector bíblico accesible con narración en audio, 9 versiones en español, modo sin conexión y accesibilidad WCAG 2.2 AAA.',
-			url: 'https://aletheiareader.johan.cl',
+			url: 'https://reader.johan.cl/',
 			repo: 'https://github.com/yojananyosef/aletheia-reader',
 			status: 'live',
 		},
@@ -98,7 +98,7 @@ export const site: SiteData = {
 			name: 'Aletheia Gateway',
 			description:
 				'Estudio bíblico comparativo: hasta 5 versiones en paralelo de un catálogo de 22, con concordancia, comentarios y referencias cruzadas.',
-			url: 'https://aletheiagateway.johan.cl/',
+			url: 'https://gateway.johan.cl/',
 			repo: 'https://github.com/yojananyosef/aletheia-gateway',
 			status: 'live',
 		},
@@ -106,7 +106,7 @@ export const site: SiteData = {
 			name: 'Aletheia Chat',
 			description:
 				'Lectura bíblica conversacional: cada capítulo se lee como un chat entre sus protagonistas. PWA mobile-first con rutas por capítulo.',
-			url: 'https://aletheiachat.johan.cl/',
+			url: 'https://chat.johan.cl/',
 			repo: 'https://github.com/yojananyosef/aletheia-chat',
 			status: 'live',
 		},
